@@ -6,7 +6,6 @@ const agencyRoutes = require('./routes/agencyRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const authRoutes = require('./routes/authRoutes');
 const { authenticateToken } = require('./middleware/authMiddleware');
-const path = require('path');
 
 const app = express();
 
@@ -22,13 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/agencies', authenticateToken, agencyRoutes);
 app.use('/api/clients', authenticateToken, clientRoutes);
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve index.html for all unknown GET routes (for SPA support)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
