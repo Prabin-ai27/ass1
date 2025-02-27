@@ -1,6 +1,7 @@
-const express = require("express");
-const router = express.Router(); 
-const Client =require('../models/Client.js')
+const express = require('express');
+const Client = require('../models/Client');
+const router = express.Router();
+
 router.put('/:id', async (req, res) => {
     try {
         const client = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -10,6 +11,7 @@ router.put('/:id', async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
+
 router.get('/top', async (req, res) => {
     try {
         const topClient = await Client.find().sort({ totalBill: -1 }).limit(1).populate('agencyId', 'name');
