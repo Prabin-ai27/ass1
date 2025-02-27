@@ -2,6 +2,7 @@ const express = require('express');
 const Client = require('../models/Client');
 const router = express.Router();
 
+
 router.put('/:id', async (req, res) => {
     try {
         const client = await Client.findByIdAndUpdate(req.params.id, req.body, { new: true });

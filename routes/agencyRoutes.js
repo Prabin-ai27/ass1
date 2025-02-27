@@ -2,6 +2,7 @@ const express = require('express');
 const Agency = require('../models/Agency');
 const Client = require('../models/Client');
 const router = express.Router();
+
 router.post('/', async (req, res) => {
     try {
         const { name, address1, address2, state, city, phoneNumber, clients } = req.body;

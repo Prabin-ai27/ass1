@@ -1,3 +1,4 @@
+// server.js - Entry point for Node.js backend
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -17,11 +18,11 @@ app.use(cors({
 }));
 const path = require('path');
 
-// Serve static files
+// Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route for serving index.html
-app.get('/', (req, res) => {
+// Serve index.html for all unknown routes (for SPA support)
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
@@ -34,7 +35,7 @@ app.use('/api/clients', authenticateToken, clientRoutes);
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-}).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
+}).then(() => console.log('MongoDB Connected')).catch(err => console.error('MongoDB connection error:', err));
 
 // Start Server
 const PORT = process.env.PORT || 5000;
